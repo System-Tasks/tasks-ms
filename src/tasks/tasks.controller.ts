@@ -5,6 +5,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { TaskPaginationDto } from './dto/task-pagination.dto';
 import { ChangeTaskStatusDto } from './dto';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Controller()
 export class TasksController {
@@ -38,5 +39,15 @@ export class TasksController {
   @MessagePattern('changeTaskStatus')
   changeStatus(@Payload() changeTaskStatusDto: ChangeTaskStatusDto) {
     return this.tasksService.changeStatus(changeTaskStatusDto);
+  }
+
+  @MessagePattern('createComment')
+  createComment(@Payload() createCommentDto: CreateCommentDto) {
+    return this.tasksService.createComment(createCommentDto);
+  }
+
+  @MessagePattern('findTaskProject')
+  findTaskProject(@Payload('id') id: string) {
+    return this.tasksService.findTaskProject(id);
   }
 }

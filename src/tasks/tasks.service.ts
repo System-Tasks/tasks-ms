@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client';
 import { RpcException } from '@nestjs/microservices';
 import { TaskPaginationDto } from './dto/task-pagination.dto';
 import { ChangeTaskStatusDto } from './dto';
+import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Injectable()
 export class TasksService extends PrismaClient implements OnModuleInit {
@@ -101,5 +102,28 @@ export class TasksService extends PrismaClient implements OnModuleInit {
       where: { id },
       data: { status }
     });
+  }
+
+  createComment(createCommentDto: CreateCommentDto) {
+    const { ...data } = createCommentDto;
+
+    return this.comment.create({
+      data
+    });
+  }
+
+  async findTaskProject(projectId: string) {
+    const task = await this.task.findMany({
+      where: { projectId }
+    });
+
+    if( !task ){
+      throw new RpcException({
+        message: `Tasks with projectId ${projectId} not found`,
+        status: HttpStatus.BAD_REQUEST
+      });
+    }
+
+    return task;
   }
 }
