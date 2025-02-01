@@ -10,9 +10,8 @@ export class CreateTaskDto {
     @IsString()
     description: string;
 
-    @IsDate()
     @IsOptional()
-    dateLimit: Date;
+    dateLimit: string;
 
     @IsEnum(TaskStatusList,{
         message: `The possible status values are ${TaskStatusList}`

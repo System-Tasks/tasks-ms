@@ -2,7 +2,6 @@ import { HttpStatus, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaClient } from '@prisma/client';
-import { PaginationDto } from 'src/common';
 import { RpcException } from '@nestjs/microservices';
 import { TaskPaginationDto } from './dto/task-pagination.dto';
 import { ChangeTaskStatusDto } from './dto';
@@ -17,8 +16,13 @@ export class TasksService extends PrismaClient implements OnModuleInit {
   }
 
   create(createTaskDto: CreateTaskDto) {
+    const { dateLimit, ...data } = createTaskDto;
+
     return this.task.create({
-      data: createTaskDto
+      data: {
+        ...data,
+        dateLimit: dateLimit ? new Date(dateLimit) : null,
+      }
     });
   }
 
@@ -64,11 +68,14 @@ export class TasksService extends PrismaClient implements OnModuleInit {
   async update(id: string, updateTaskDto: UpdateTaskDto) {
     await this.findOne(id);
 
-    const {id:_, ...data} = updateTaskDto;
+    const {dateLimit ,id:_, ...data} = updateTaskDto;
 
     return await this.task.update({
       where: { id },
-      data: data
+      data: {
+        ...data,
+        dateLimit: dateLimit ? new Date(dateLimit) : null,
+      }
     });
   }
 
