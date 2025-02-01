@@ -1,4 +1,4 @@
-# Instalaciones recomendadas - Microservicio Auth
+# Instalaciones recomendadas - Microservicio Tasks
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
@@ -47,6 +47,3 @@ PORT=3002
 DATABASE_URL="postgresql://postgres:123456789@localhost:5433/tasksdb?schema=public"
 JWT_SECRET=
 ```
-
-
-
