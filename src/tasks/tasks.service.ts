@@ -141,4 +141,17 @@ export class TasksService extends PrismaClient implements OnModuleInit {
 
     return comments;
   }
+  
+  async findAllComments() {
+    const comments = await this.comment.findMany();
+
+    if( !comments ){
+      throw new RpcException({
+        message: `Comments not exist`,
+        status: HttpStatus.BAD_REQUEST
+      });
+    }
+
+    return comments;
+  }
 }

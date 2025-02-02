@@ -55,4 +55,9 @@ export class TasksController {
   findCommentTask(@Payload('id') id: string) {
     return this.tasksService.findCommentsTask(id);
   }
+
+  @MessagePattern('findAllComments')
+  findAllComments() {
+    return this.tasksService.findAllComments();
+  }
 }
