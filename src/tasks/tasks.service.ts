@@ -126,4 +126,19 @@ export class TasksService extends PrismaClient implements OnModuleInit {
 
     return task;
   }
+
+  async findCommentsTask(taskId: string) {
+    const comments = await this.comment.findMany({
+      where: { taskId }
+    });
+
+    if( !comments ){
+      throw new RpcException({
+        message: `Comments with id ${taskId} not found`,
+        status: HttpStatus.BAD_REQUEST
+      });
+    }
+
+    return comments;
+  }
 }

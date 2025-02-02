@@ -50,4 +50,9 @@ export class TasksController {
   findTaskProject(@Payload('id') id: string) {
     return this.tasksService.findTaskProject(id);
   }
+
+  @MessagePattern('findCommentTask')
+  findCommentTask(@Payload('id') id: string) {
+    return this.tasksService.findCommentsTask(id);
+  }
 }
